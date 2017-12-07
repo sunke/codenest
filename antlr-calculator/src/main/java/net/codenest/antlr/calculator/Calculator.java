@@ -1,18 +1,31 @@
 package net.codenest.antlr.calculator;
 
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
+import java.util.Scanner;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Calculator {
 	public static void main(String[] args) throws Exception {
-		ANTLRInputStream input = new ANTLRInputStream("1 + 2 - 6 * 3");
-		CalculatorLexer lexer = new CalculatorLexer(input);
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		CalculatorParser parser = new CalculatorParser(tokens);
-		ParseTree tree = parser.input();
+		try (Scanner sc = new Scanner(System.in)) {
+			while (true) {
+				String input = sc.nextLine();
+				
+				if (input.equals("q")) {
+					System.exit(0);
+				} else if (input.trim().equals("") || input.trim().equals("\n")) {
+					continue;
+				} else {
+					CalculatorLexer lexer = new CalculatorLexer(new ANTLRInputStream(input));
+					CommonTokenStream tokens = new CommonTokenStream(lexer);
+					CalculatorParser parser = new CalculatorParser(tokens);
 
-		CalculatorVisitorImpl visitor = new CalculatorVisitorImpl();
-		Double result = visitor.visit(tree);
-		System.out.println("Result: " + result);
+					ParseTree tree = parser.input();
+					CalculatorVisitorImpl visitor = new CalculatorVisitorImpl();
+					System.out.println(visitor.visit(tree));
+				}
+			}
+		}
 	}
 }
