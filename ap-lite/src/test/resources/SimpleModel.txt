@@ -1,0 +1,8 @@
+Test = CLASS {
+	PROPERTIES{
+		property 1 = UNDEFINED;
+		property 2 = 0;
+	}; 
+	attribute 1 = "Product";
+	attribute 2 = 100;
+}
