@@ -3,53 +3,55 @@ grammar AplModel;
 /***********************************************************
  * AP Lite grammar rules
  **********************************************************/
-modelDefinition: (classDefinition)+ ;
+modelDef: (classDef)+ ;
 
-classDefinition
+classDef
  	: className '=' 'class' ';'
  	| className '=' 'class' '{' 
-	 		(childrenDefinition)? 
-	 		(propertiesDefinition)? 
-	 		(attributesDefinition)? 
-	 		(auxDefinition*)?
+	 		(childrenDef)? 
+	 		(propertiesDef)? 
+	 		(attributesDef)? 
+	 		(componentsDef)?
+	 		(auxiliaryDef)*
  		'}' ';'
  	;
 
-childrenDefinition: 'children' '{' (childDefinition)* '}' ';' ;
+childrenDef: 'children' '{' (childDef)* '}' ';' ;
 
-propertiesDefinition
+propertiesDef
 	: 'properties' '{'
- 		( propertyDefinition
+ 		( propertyDef
  		| propertyConstraint
- 		| propertyUnitDefinition
+ 		| propertyUnitDef
  		)* '}' ';'
  	;
  	
-attributesDefinition: 'attributes' '=' attributeName (',' attributeName)* ';' ;
+attributesDef: 'attributes' '=' attributeName (',' attributeName)* ';' ;
 
-auxDefinition: 
- 	classUnitDefinition
- 	| classDescriptionDefinition
- 	| classResourceNameDefinition
- 	| classGraphInfoDefinition
- 	| classSortCodeDefinition
- 	| classIconDefinition
- 	| classColorDefinition
- 	| effectivityDefinition
- 	| componentsDefinition
+componentsDef: 'components' '=' className ',' className	(',' 'automatic')? ';' ;
+
+auxiliaryDef
+	: classUnitDef
+ 	| classDescriptionDef
+ 	| classResourceNameDef
+ 	| classGraphInfoDef
+ 	| classSortCodeDef
+ 	| classIconDef
+ 	| classColorDef
+ 	| effectivityDef
 	;
  
-childDefinition: className ';' | className childAttributes ';' ;
+childDef: className ';' | className childAttributes ';' ;
 
-childAttributes: '{' relationDefinition '}' ;
+childAttributes: '{' relationDef '}' ;
  
-relationDefinition: 'relation' '=' 'automatic' ';' ;
+relationDef: 'relation' '=' 'automatic' ';' ;
 
-propertyDefinition: propertyName ('.derived')? '=' ('undefined' | expression) ';' ;
+propertyDef: propertyName ('.derived')? '=' ('undefined' | expression) ';' ;
 
 propertyConstraint: propertyName ('>' | '<' | '>=' | '<=') expression ';' ;
 
-propertyUnitDefinition: propertyName '.unit' '=' literalString ';' ;
+propertyUnitDef: propertyName '.unit' '=' literalString ';' ;
   
 expression
 	: '(' expression ')'
@@ -75,23 +77,21 @@ attributeName : IDENTIFIER ;
 
 classPropertyRef: className '.' propertyName ;
 
-classUnitDefinition: 'unit' '=' literalString ';' ;
+classUnitDef: 'unit' '=' literalString ';' ;
 
-classDescriptionDefinition: 'description' '=' literalString ';' ;
+classDescriptionDef: 'description' '=' literalString ';' ;
 
-classResourceNameDefinition: 'resource' 'name' '=' literalString ';' ;
+classResourceNameDef: 'resource' 'name' '=' literalString ';' ;
 
-classGraphInfoDefinition: 'graph' 'info' '=' literalString ';' ;
+classGraphInfoDef: 'graph' 'info' '=' literalString ';' ;
 
-classSortCodeDefinition: 'sort' 'code' '=' NUMBER ';' ;
+classSortCodeDef: 'sort' 'code' '=' NUMBER ';' ;
 
-classIconDefinition: 'icon' '=' literalString ';' ;
+classIconDef: 'icon' '=' literalString ';' ;
 
-classColorDefinition: 'color' '=' literalString ';' ;
+classColorDef: 'color' '=' literalString ';' ;
 
-componentsDefinition: 'components' '=' className ',' className	(',' 'automatic')? ';' ;
-
-effectivityDefinition: 'effectivity' '=' ('range' | 'moment') ';' ;
+effectivityDef: 'effectivity' '=' ('range' | 'moment') ';' ;
 
 functionStatement
 	: sumFunction

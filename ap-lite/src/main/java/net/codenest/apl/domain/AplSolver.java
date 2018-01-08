@@ -8,21 +8,21 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class APSolverConfig {
+public class AplSolver {
 
 	@Getter @NonNull
 	private String name;
 
-	private Set<APClassProperty> lockedProperties = new HashSet<APClassProperty>();
+	private Set<AplClassProperty> lockedProperties = new HashSet<AplClassProperty>();
 	
-	private Set<APClassProperty> postedProperties = new HashSet<APClassProperty>();
+	private Set<AplClassProperty> postedProperties = new HashSet<AplClassProperty>();
 	
 	
-	public void addLockedProperty(final APClassProperty property) {
+	public void addLockedProperty(final AplClassProperty property) {
 		lockedProperties.add(property);
 	}
 	
-	public void addPostedProperty(final APClassProperty property){
+	public void addPostedProperty(final AplClassProperty property){
 		postedProperties.add(property);
 	}
 	

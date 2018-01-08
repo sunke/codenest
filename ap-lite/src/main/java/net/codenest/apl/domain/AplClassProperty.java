@@ -5,7 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class APClassProperty {
+public class AplClassProperty {
 
 	@Getter @NonNull
 	private String name;

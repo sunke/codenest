@@ -1,0 +1,932 @@
+/*
+ * Infor supply chain object model definition
+ * File: "~/Development/AP/JIRA Supporting Information/ADVPLAN-3791 - Integ Test AP SCO 11.1.5.0.3/ApSco.pls"
+ * Last updated: 15-08-2017 17:52:25
+ */
+ 
+ 
+ /**** Globals ****/
+ 
+ Globals = CLASS {
+     attributes = Ap_Scenario, Cycle_Period, Planner, Profile, Profile_Excel, Scenario;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 5; MgiYpos = 5; }";
+     sort code = 100;
+ }
+ 
+ 
+ 
+ /**** Money ****/
+ 
+ Money = CLASS {
+     CHILDREN {
+         Locations { relation = automatic; }
+         Products { relation = automatic; }
+     };
+     PROPERTIES {
+         dump stock cost.derived = SUM( Locations.dump stock cost );
+         excess end stock su.derived = SUM( Locations.excess end stock su );
+         excess end stock su penalty.derived = excess end stock su unit penalty * excess end stock su;
+         excess end stock su unit penalty = 0;
+         excess stock.derived = SUM( Locations.excess stock );
+         excess stock penalty.derived = excess stock unit penalty * excess stock;
+         excess stock unit penalty = 0;
+         expedited production.derived = SUM( Locations.expedited production );
+         expedited production penalty.derived = expedited production unit penalty * expedited production;
+         expedited production unit penalty = 0;
+         expedited purchase.derived = SUM( Locations.expedited purchase );
+         expedited purchase penalty.derived = expedited purchase unit penalty * expedited purchase;
+         expedited purchase unit penalty = 0;
+         expedited shipments.derived = SUM( Locations.expedited shipments );
+         expedited shipments penalty.derived = expedited shipments unit penalty * expedited shipments;
+         expedited shipments unit penalty = 0;
+         holding cost.derived = SUM( Locations.holding cost );
+         lost sales.derived = SUM( Locations.lost sales );
+         lost sales penalty.derived = lost sales unit penalty * lost sales;
+         lost sales unit penalty = 0;
+         negative stock.derived = SUM( Locations.negative stock );
+         negative stock penalty.derived = negative stock unit penalty * negative stock;
+         negative stock unit penalty = 0;
+         over capacity.derived = SUM( Locations.over capacity );
+         over capacity penalty.derived = over capacity unit penalty * over capacity;
+         over capacity unit penalty = 0;
+         over max purchase.derived = SUM( Locations.over max purchase ) + SUM( Products.over max purchase );
+         over max purchase penalty.derived = over max purchase unit penalty * over max purchase;
+         over max purchase unit penalty = 0;
+         overtime production hrs cost.derived = SUM( Locations.overtime production hrs cost );
+         production cost.derived = SUM( Locations.production cost );
+         profit.derived = revenue - total cost;
+         purchase cost.derived = SUM( Locations.purchase cost );
+         regular production hrs cost.derived = SUM( Locations.regular production hrs cost );
+         revenue.derived = SUM( Locations.revenue );
+         scheduled production dropped.derived = SUM( Locations.scheduled production dropped );
+         scheduled production dropped penalty.derived = scheduled production dropped unit penalty * scheduled production dropped;
+         scheduled production dropped unit penalty = 0;
+         solver cost.derived = total cost + total penalty - revenue;
+         solver cost >= -1e+010;
+         total cost.derived = holding cost + dump stock cost + purchase cost + regular production hrs cost + overtime production hrs cost + production cost + transport cost;
+         total penalty.derived = excess end stock su penalty + excess stock penalty + under safety cost penalty + negative stock penalty + over capacity penalty + scheduled production dropped penalty + lost sales penalty + under min sales penalty + over max purchase penalty + expedited purchase penalty + expedited production penalty + expedited shipments penalty;
+         transport cost.derived = SUM( Locations.transport cost );
+         under min sales.derived = SUM( Locations.under min sales );
+         under min sales penalty.derived = under min sales unit penalty * under min sales;
+         under min sales unit penalty = 0;
+         under safety cost.derived = SUM( Locations.under safety cost );
+         under safety cost penalty.derived = under safety cost unit penalty * under safety cost;
+         under safety cost unit penalty = 0;
+     };
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 365; MgiYpos = 5; }";
+     icon = "Manufacturing/money2";
+     sort code = 110;
+ }
+ 
+ 
+ 
+ /**** Scenarios ****/
+ 
+ Scenarios = CLASS {
+     CHILDREN {
+         Money { relation = automatic; }
+     };
+     PROPERTIES {
+         dump stock cost = UNDEFINED;
+         dump stock cost1 = SUM( Money.dump stock cost );
+         excess end stock su penalty = UNDEFINED;
+         excess end stock su penalty1 = SUM( Money.excess end stock su penalty );
+         excess stock penalty = UNDEFINED;
+         excess stock penalty1 = SUM( Money.excess stock penalty );
+         expedited production penalty = UNDEFINED;
+         expedited production penalty1 = SUM( Money.expedited production penalty );
+         expedited purchase penalty = UNDEFINED;
+         expedited purchase penalty1 = SUM( Money.expedited purchase penalty );
+         expedited shipments penalty = UNDEFINED;
+         expedited shipments penalty1 = SUM( Money.expedited shipments penalty );
+         holding cost = UNDEFINED;
+         holding cost1 = SUM( Money.holding cost );
+         lost sales penalty = UNDEFINED;
+         lost sales penalty1 = SUM( Money.lost sales penalty );
+         negative stock penalty = UNDEFINED;
+         negative stock penalty1 = SUM( Money.negative stock penalty );
+         over capacity penalty = UNDEFINED;
+         over capacity penalty1 = SUM( Money.over capacity penalty );
+         over max purchase penalty = UNDEFINED;
+         over max purchase penalty1 = SUM( Money.over max purchase penalty );
+         overtime production hrs cost = UNDEFINED;
+         overtime production hrs cost1 = SUM( Money.overtime production hrs cost );
+         production cost = UNDEFINED;
+         production cost1 = SUM( Money.production cost );
+         profit.derived = revenue - total cost;
+         purchase cost = UNDEFINED;
+         purchase cost1 = SUM( Money.purchase cost );
+         regular production hrs cost = UNDEFINED;
+         regular production hrs cost1 = SUM( Money.regular production hrs cost );
+         revenue = UNDEFINED;
+         revenue1 = SUM( Money.revenue );
+         scheduled production dropped penalty = UNDEFINED;
+         scheduled production dropped penalty1 = SUM( Money.scheduled production dropped penalty );
+         solver cost.derived = total cost + total penalty - revenue;
+         solver cost >= -1e+010;
+         total cost.derived = holding cost + dump stock cost + purchase cost + regular production hrs cost + overtime production hrs cost + production cost + transport cost;
+         total penalty.derived = excess end stock su penalty + excess stock penalty + under safety cost penalty + negative stock penalty + over capacity penalty + scheduled production dropped penalty + lost sales penalty + under min sales penalty + over max purchase penalty + expedited purchase penalty + expedited production penalty + expedited shipments penalty;
+         transport cost = UNDEFINED;
+         transport cost1 = SUM( Money.transport cost );
+         under min sales penalty = UNDEFINED;
+         under min sales penalty1 = SUM( Money.under min sales penalty );
+         under safety cost penalty = UNDEFINED;
+         under safety cost penalty1 = SUM( Money.under safety cost penalty );
+     };
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 160; MgiYpos = 5; }";
+     icon = "AP3/money";
+     sort code = 120;
+ }
+ 
+ 
+ 
+ /**** Locations ****/
+ 
+ Locations = CLASS {
+     CHILDREN {
+         Products At Locations ;
+         Resources ;
+         Routes Out ;
+         Routes In ;
+     };
+     PROPERTIES {
+         allow excess end stock su = 0;
+         capacity.derived = SUM( Resources.capacity );
+         capacity.unit = "hrs";
+         ctp.derived = SUM( Products At Locations.ctp );
+         delivery.derived = SUM( Products At Locations.delivery );
+         demand.derived = SUM( Products At Locations.demand );
+         depletion.derived = SUM( Products At Locations.depletion );
+         dump stock.derived = SUM( Products At Locations.dump stock );
+         dump stock cost.derived = SUM( Products At Locations.dump stock cost );
+         empty = UNDEFINED;
+         end stock.derived = SUM( Products At Locations.end stock );
+         end stock su.derived = SUM( Products At Locations.end stock su );
+         end stock su <= end stock su ub;
+         end stock su.unit = "pallets";
+         end stock su ub = IF( max end stock su - (9.9999e+009), 1e+010, max end stock su + excess end stock su);
+         end stock su ub.unit = "pallets";
+         excess end stock su = UNDEFINED;
+         excess end stock su <= allow excess end stock su * (1e+010);
+         excess end stock su.unit = "pallets";
+         excess stock = SUM( Products At Locations.excess stock );
+         expedited production.derived = SUM( Resources.expedited production );
+         expedited purchase.derived = SUM( Products At Locations.expedited purchase );
+         expedited shipments.derived = SUM( Routes Out.expedited shipments );
+         external demand.derived = SUM( Products At Locations.external demand );
+         forecast.derived = SUM( Products At Locations.forecast );
+         holding cost.derived = SUM( Products At Locations.holding cost );
+         load = IF( production hrs, (production hrs + maintenance) / capacity * 100, empty);
+         load <= 100;
+         load.unit = "%";
+         lost sales.derived = SUM( Products At Locations.lost sales );
+         maintenance.derived = SUM( Resources.maintenance );
+         maintenance.unit = "hrs";
+         max end stock su = 0;
+         max end stock su.unit = "pallets";
+         negative stock.derived = SUM( Products At Locations.negative stock );
+         over capacity.derived = SUM( Resources.over capacity );
+         over max purchase = SUM( Products At Locations.over max purchase );
+         overtime production hrs.derived = SUM( Resources.overtime production hrs );
+         overtime production hrs cost.derived = SUM( Resources.overtime production hrs cost );
+         planned sales.derived = SUM( Products At Locations.planned sales );
+         production.derived = SUM( Resources.production );
+         production.unit = "units";
+         production cost.derived = SUM( Resources.production cost );
+         production hrs = SUM( Resources.production hrs );
+         production hrs.unit = "hrs";
+         purchase cost.derived = SUM( Products At Locations.purchase cost );
+         qty on hand.derived = SUM( Products At Locations.qty on hand );
+         receipts.derived = SUM( Products At Locations.receipts );
+         regular production hrs.derived = SUM( Resources.regular production hrs );
+         regular production hrs cost.derived = SUM( Resources.regular production hrs cost );
+         released production.derived = SUM( Products At Locations.released production );
+         revenue.derived = SUM( Products At Locations.revenue );
+         safety stock.derived = SUM( Products At Locations.safety stock );
+         scheduled production dropped.derived = SUM( Resources.scheduled production dropped );
+         service level = IF( external demand, planned sales * 100 / external demand, empty);
+         service level >= 100;
+         service level.unit = "%";
+         shipments.derived = SUM( Products At Locations.shipments );
+         start stock.derived = SUM( Products At Locations.start stock );
+         supply.derived = SUM( Products At Locations.supply );
+         transport cost.derived = SUM( Routes Out.transport cost );
+         under min sales.derived = SUM( Products At Locations.under min sales );
+         under safety cost.derived = SUM( Products At Locations.under safety cost );
+         under safety stock.derived = SUM( Products At Locations.under safety stock );
+         weeks cover = SHIFT( INVCOVER( end stock, demand ) / (%week), -1 );
+     };
+     attributes = Country, Region, Type;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 455; MgiYpos = 75; }";
+     icon = "Buildings/office-building";
+     resource name = "Location";
+     sort code = 200;
+ }
+ 
+ 
+ 
+ /**** Products ****/
+ 
+ Products = CLASS {
+     CHILDREN {
+         Products At Locations ;
+         Transfers Out ;
+         Transfers In ;
+         Transfers ;
+         Products At Suppliers ;
+     };
+     PROPERTIES {
+         ctp.derived = SUM( Products At Locations.ctp );
+         delivery.derived = SUM( Products At Locations.delivery );
+         demand.derived = SUM( Products At Locations.demand );
+         depletion.derived = SUM( Products At Locations.depletion );
+         dump stock.derived = SUM( Products At Locations.dump stock );
+         empty = UNDEFINED;
+         end stock.derived = SUM( Products At Locations.end stock );
+         excess stock = SUM( Products At Locations.excess stock );
+         expedited purchase.derived = SUM( Products At Locations.expedited purchase );
+         external demand.derived = SUM( Products At Locations.external demand );
+         forecast.derived = SUM( Products At Locations.forecast );
+         holding cost.derived = SUM( Products At Locations.holding cost );
+         lost sales.derived = SUM( Products At Locations.lost sales );
+         negative stock.derived = SUM( Products At Locations.negative stock );
+         over max purchase.derived = SUM( Products At Suppliers.over max purchase );
+         planned sales.derived = SUM( Products At Locations.planned sales );
+         purchase cost.derived = SUM( Products At Locations.purchase cost );
+         qty on hand.derived = SUM( Products At Locations.qty on hand );
+         receipts.derived = SUM( Products At Locations.receipts );
+         released production.derived = SUM( Products At Locations.released production );
+         revenue.derived = SUM( Products At Locations.revenue );
+         safety stock.derived = SUM( Products At Locations.safety stock );
+         service level = IF( external demand, planned sales * 100 / external demand, empty);
+         service level >= 100;
+         service level.unit = "%";
+         shipments.derived = SUM( Products At Locations.shipments );
+         start stock.derived = SUM( Products At Locations.start stock );
+         supply.derived = SUM( Products At Locations.supply );
+         under min sales.derived = SUM( Products At Locations.under min sales );
+         under safety cost.derived = SUM( Products At Locations.under safety cost );
+         under safety stock.derived = SUM( Products At Locations.under safety stock );
+         units per transport unit = 0;
+         weeks cover = SHIFT( INVCOVER( end stock, demand ) / (%week), -1 );
+     };
+     attributes = Item Class, Item Type;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 275; MgiYpos = 75; }";
+     icon = "Manufacturing/beer_bottle";
+     resource name = "Product";
+     sort code = 210;
+ }
+ 
+ 
+ 
+ /**** Products At Locations ****/
+ 
+ Products At Locations = CLASS {
+     CHILDREN {
+         Formulas ;
+         Transfers Out ;
+         Transfers In ;
+         Supplier Allocations ;
+         Customer Allocations ;
+     };
+     PROPERTIES {
+         aging lead time = 0;
+         aging lead time.unit = "days";
+         aging offset = MAX( INT( aging lead time * %day - 0.5 ), 0 );
+         aging offset.unit = " ";
+         allow dump stock = 0;
+         allow dump stock.unit = " ";
+         allow excess stock = 0;
+         allow excess stock.unit = " ";
+         allow negative stock = 0;
+         allow negative stock.unit = " ";
+         allow under safety stock = 0;
+         allow under safety stock.unit = " ";
+         can have delivery = BOOL( IF( use fixed delivery allocation, delivery allocation weight sum, nb delivery) );
+         can have production = BOOL( IF( use fixed production allocation, production allocation weight sum, nb production) );
+         can have receipts = BOOL( IF( use fixed receipts allocation, receipts allocation weight sum, nb receipts) );
+         can have supply = BOOL( can have delivery + can have receipts + can have production );
+         can have supply >= 1;
+         check cover = max cover - min cover;
+         ctp = SUM( Customer Allocations.ctp );
+         daily holding cost factor = 0;
+         daily holding cost factor.unit = "factor/day";
+         delivery = SUM( Supplier Allocations.delivery );
+         delivery allocation weight sum.derived = SUM( Supplier Allocations.delivery allocation weight );
+         delivery allocation weight sum.unit = " ";
+         demand = external demand + shipments + depletion;
+         depletion = SUM( Formulas.depletion );
+         diff released production = released production - old released production;
+         dump stock = UNDEFINED;
+         dump stock <= allow dump stock * (1e+010);
+         dump stock cost = dump stock * dump stock unit cost;
+         dump stock cost factor = 0;
+         dump stock cost factor.unit = " ";
+         dump stock unit cost = dump stock cost factor * std cost;
+         dump stock unit cost.unit = "euro/unit";
+         empty = UNDEFINED;
+         end stock = start stock + delivery - depletion + released production - shipments + receipts - planned sales - dump stock + negative stock;
+         end stock >= statistical safety stock - under safety stock;
+         end stock <= end stock max1;
+         end stock copy = end stock;
+         end stock copy >= min cover stock - under safety stock;
+         end stock copy <= end stock max2;
+         end stock copy2 = end stock;
+         end stock max = MIN( end stock max1, end stock max2 );
+         end stock max1 = IF( max fixed stock - (9.9999e+009), 1e+010, max cover stock + max fixed stock + excess stock);
+         end stock max2 = IF( has shelf life, max remaining qty on hand + COVER( stock increase, 1 - shelf life * %day, 0), 1e+010);
+         end stock su = end stock / units per storage unit;
+         end stock su.unit = "pallets";
+         excess stock = UNDEFINED;
+         excess stock <= allow excess stock * (1e+010);
+         expedited purchase.derived = SUM( Supplier Allocations.expedited purchase );
+         expiring qty on hand = UNDEFINED;
+         external demand = SUM( Customer Allocations.external demand );
+         forecast = SUM( Customer Allocations.forecast );
+         has shelf life = 0;
+         has shelf life.unit = " ";
+         holding cost = end stock * daily holding cost factor / (%day) * std cost;
+         lost sales = SUM( Customer Allocations.lost sales );
+         max cover = 0;
+         max cover.unit = "days";
+         max cover stock = COVER( demand, SHIFT( max cover, 1 ) * %day );
+         max fixed stock = 0;
+         max fixed stock.unit = "units";
+         max remaining qty on hand = MAX( 0, (qty on hand | SHIFT( max remaining qty on hand, 1 )) - expiring qty on hand );
+         min cover = 0;
+         min cover.unit = "days";
+         min cover stock = COVER( demand, SHIFT( min cover, 1 ) * %day );
+         nb delivery = SUM( Supplier Allocations.one );
+         nb delivery.unit = " ";
+         nb depletion = SUM( Formulas.has inflow );
+         nb depletion.unit = " ";
+         nb production = SUM( Formulas.has outflow );
+         nb production.unit = " ";
+         nb receipts = SUM( Transfers In.nb receipts );
+         nb receipts.unit = " ";
+         nb sales = SUM( Customer Allocations.one );
+         nb sales.unit = " ";
+         nb shipments = SUM( Transfers Out.nb shipments );
+         nb shipments.unit = " ";
+         negative stock = UNDEFINED;
+         negative stock <= allow negative stock * (1e+010);
+         old released production = UNDEFINED;
+         orders = SUM( Customer Allocations.orders );
+         over max purchase = SUM( Supplier Allocations.over max purchase );
+         planned delivery = SUM( Supplier Allocations.planned delivery );
+         planned receipts = SUM( Transfers In.planned receipts );
+         planned released production = COLLECT( shifted yield, aging offset, aging offset);
+         planned sales = SUM( Customer Allocations.planned sales );
+         production allocation weight sum.derived = SUM( Formulas.production alloc weight outflow );
+         production allocation weight sum.unit = " ";
+         purchase cost.derived = SUM( Supplier Allocations.purchase cost );
+         qty on hand = UNDEFINED;
+         receipts = SUM( Transfers In.receipts );
+         receipts allocation weight sum.derived = SUM( Transfers In.receipts allocation weight partial sum );
+         receipts allocation weight sum.unit = " ";
+         released production = planned released production + scheduled released production;
+         revenue = SUM( Customer Allocations.revenue );
+         safety stock = MAX( statistical safety stock, min cover stock );
+         scheduled released production = UNDEFINED;
+         service level = IF( external demand, planned sales * 100 / external demand, empty);
+         service level.unit = "%";
+         shelf life = 0;
+         shelf life.unit = "days";
+         shifted yield = SUM( Formulas.shifted yield );
+         shipments = SUM( Transfers Out.shipments );
+         start stock = qty on hand | SHIFT( end stock, 1 );
+         statistical safety stock = 0;
+         std cost = 0;
+         std cost.unit = " ";
+         stock increase = delivery + released production + receipts;
+         supply = released production + delivery + receipts;
+         under min sales.derived = SUM( Customer Allocations.under min sales );
+         under safety cost = under safety stock * under safety penalty;
+         under safety penalty = 0;
+         under safety stock = UNDEFINED;
+         under safety stock <= allow under safety stock * (1e+010);
+         units per storage unit = 0;
+         units per storage unit.unit = "units/pallet";
+         use fixed delivery allocation = 0;
+         use fixed delivery allocation.unit = " ";
+         use fixed production allocation = 0;
+         use fixed production allocation.unit = " ";
+         use fixed receipts allocation = 0;
+         use fixed receipts allocation.unit = " ";
+         weeks cover = SHIFT( INVCOVER( end stock, demand ) / (%week), -1 );
+     };
+     attributes = Item Class, Item Type, Transport;
+     components = Products, Locations;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 160; MgiXpos = 340; MgiYpos = 285; }";
+     icon = "Allocations/beer-bottle@office-building";
+     sort code = 220;
+ }
+ 
+ 
+ 
+ /**** Processes ****/
+ 
+ Processes = CLASS {
+     CHILDREN {
+         Formulas ;
+         Resource Allocations ;
+     };
+     PROPERTIES {
+         allow expedited production = 0;
+         allow expedited production.unit = " ";
+         allow scheduled production dropped = 0;
+         allow scheduled production dropped.unit = " ";
+         batch size = 0;
+         depletion = SUM( Formulas.depletion );
+         expedited production = UNDEFINED;
+         expedited production <= allow expedited production * planned production;
+         inflow factor.derived = SUM( Formulas.inflow factor );
+         inflow factor.unit = " ";
+         offset = MAX( INT( production lead time * %day - 0.5 ), 0 );
+         offset.unit = " ";
+         outflow factor.derived = SUM( Formulas.outflow factor );
+         outflow factor.unit = " ";
+         planned production = UNDEFINED;
+         planned production minus expedited = planned production - expedited production;
+         production = planned production + scheduled production adjusted;
+         production allocation weight = 0;
+         production allocation weight.unit = " ";
+         production lead time = 0;
+         production lead time.unit = "days";
+         production minus expedited = production - expedited production;
+         scheduled production = UNDEFINED;
+         scheduled production adjusted = scheduled production - scheduled production dropped;
+         scheduled production dropped = UNDEFINED;
+         scheduled production dropped <= allow scheduled production dropped * (1e+010);
+         shifted planned production = COLLECT( planned production minus expedited, offset, offset) + expedited production;
+         shifted production = COLLECT( production minus expedited, offset, offset) + expedited production;
+         shifted yield = SUM( Formulas.shifted yield );
+         use fixed prod alloc outflow = SUM( Formulas.use fixed prod alloc outflow );
+         use fixed prod alloc outflow.unit = " ";
+         yield = SUM( Formulas.yield );
+     };
+     attributes = Location, Main Outflow Product, Version;
+     color = "PMS 156";
+     effectivity = range;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 185; MgiYpos = 285; }";
+     icon = "Manufacturing/potion_green";
+     resource name = "Process";
+     sort code = 300;
+ }
+ 
+ 
+ 
+ /**** Formulas ****/
+ 
+ Formulas = CLASS {
+     PROPERTIES {
+         depletion = production * inflow factor;
+         has inflow = BOOL( inflow factor );
+         has outflow = BOOL( outflow factor );
+         inflow factor = 0;
+         outflow factor = 0;
+         production = SUM( Processes.production );
+         production alloc weight outflow.derived = IF( outflow factor, production allocation weight, 0);
+         production allocation diff.derived = IF( outflow factor, production allocation factor * SUM( Products At Locations.shifted yield ) - shifted yield, 0);
+         production allocation diff >= IF( use fixed production allocation, 0, -1e+010);
+         production allocation diff <= IF( use fixed production allocation, 0, 1e+010);
+         production allocation factor.derived = production allocation weight / (SUM( Products At Locations.production allocation weight sum ));
+         production allocation factor.unit = " ";
+         production allocation weight = SUM( Processes.production allocation weight );
+         production allocation weight.unit = " ";
+         shifted production = SUM( Processes.shifted production );
+         shifted yield = shifted production * outflow factor;
+         use fixed prod alloc outflow = IF( outflow factor, use fixed production allocation, 0);
+         use fixed prod alloc outflow.unit = " ";
+         use fixed production allocation = SUM( Products At Locations.use fixed production allocation );
+         use fixed production allocation.unit = " ";
+         yield = production * outflow factor;
+     };
+     attributes = Inflow Product, Outflow Product;
+     color = "PMS 156";
+     components = Products At Locations, Processes;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 250; MgiYpos = 355; }";
+     icon = "Arrows/import1";
+     resource name = "Formula";
+     sort code = 310;
+ }
+ 
+ 
+ 
+ /**** Resources ****/
+ 
+ Resources = CLASS {
+     CHILDREN {
+         Resource Allocations ;
+     };
+     PROPERTIES {
+         allow over capacity = 0;
+         allow over capacity.unit = " ";
+         capacity = regular capacity + overtime capacity;
+         dropped maintenance = MAX( 0, overtime maintenance - overtime capacity );
+         efficiency = 0;
+         efficiency.unit = " ";
+         empty = UNDEFINED;
+         expedited production.derived = SUM( Resource Allocations.expedited production );
+         expedited production.unit = "units";
+         load = IF( production hrs, (production hrs + maintenance) / capacity * 100, empty);
+         load <= 100.1;
+         load.unit = "%";
+         maintenance = UNDEFINED;
+         over capacity = UNDEFINED;
+         over capacity <= allow over capacity * (1e+010);
+         overtime capacity = 0;
+         overtime maintenance = MAX( 0, maintenance - regular capacity );
+         overtime production hourly cost = 0;
+         overtime production hourly cost.unit = "euro/hour";
+         overtime production hrs = UNDEFINED;
+         overtime production hrs <= overtime production hrs max;
+         overtime production hrs cost = overtime production hourly cost * overtime production hrs;
+         overtime production hrs cost.unit = "euro";
+         overtime production hrs max = MAX( 0, overtime capacity - overtime maintenance );
+         production = SUM( Resource Allocations.production );
+         production.unit = "units";
+         production cost.derived = SUM( Resource Allocations.production cost );
+         production hrs = SUM( Resource Allocations.production hrs );
+         regular capacity = 0;
+         regular production hourly cost = 0;
+         regular production hourly cost.unit = "euro/hour";
+         regular production hrs = production hrs - overtime production hrs - over capacity;
+         regular production hrs <= regular production hrs max;
+         regular production hrs cost = regular production hourly cost * regular production hrs;
+         regular production hrs cost.unit = "euro";
+         regular production hrs max = MAX( 0, regular capacity - maintenance );
+         scheduled production dropped.derived = SUM( Resource Allocations.scheduled production dropped );
+         scheduled production dropped.unit = "units";
+     };
+     attributes = Location, Type;
+     color = "PMS 156";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 5; MgiYpos = 285; }";
+     icon = "Buildings/factory";
+     resource name = "Resource";
+     sort code = 350;
+     unit = "hrs";
+ }
+ 
+ 
+ 
+ /**** Resource Allocations ****/
+ 
+ Resource Allocations = CLASS {
+     PROPERTIES {
+         efficiency = SUM( Resources.efficiency );
+         efficiency.unit = " ";
+         expedited production = SUM( Processes.expedited production );
+         production = SUM( Processes.production );
+         production cost = production * production unit cost;
+         production cost.unit = "euro";
+         production hrs = production / (rate * efficiency);
+         production hrs.unit = "hrs";
+         production unit cost = 0;
+         production unit cost.unit = "euro/unit";
+         rate = 0;
+         rate.unit = "U/hr";
+         scheduled production dropped = SUM( Processes.scheduled production dropped );
+     };
+     attributes = Location, Product;
+     color = "PMS 156";
+     components = Resources, Processes;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 160; MgiXpos = 70; MgiYpos = 355; }";
+     icon = "Allocations/lemonade_bottle@factory";
+     resource name = "Resource Allocation";
+     sort code = 360;
+ }
+ 
+ 
+ 
+ /**** Routes Out ****/
+ 
+ Routes Out = CLASS {
+     CHILDREN {
+         Routes ;
+         Transfers Out ;
+     };
+     PROPERTIES {
+         expedited shipments.derived = SUM( Routes.expedited shipments );
+         shipments.derived = SUM( Routes.shipments );
+         transport cost.derived = SUM( Routes.transport cost );
+     };
+     attributes = From Location;
+     color = "PMS 243";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 545; MgiYpos = 5; }";
+     icon = "Transport/truck-export";
+     resource name = "Route Out";
+     sort code = 400;
+     unit = "Units";
+ }
+ 
+ 
+ 
+ /**** Routes In ****/
+ 
+ Routes In = CLASS {
+     CHILDREN {
+         Routes ;
+         Transfers In ;
+     };
+     PROPERTIES {
+         receipts.derived = SUM( Routes.receipts );
+     };
+     attributes = To Location;
+     color = "PMS 243";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 545; MgiYpos = 145; }";
+     icon = "Transport/truck-import";
+     resource name = "Route In";
+     sort code = 410;
+     unit = "Units";
+ }
+ 
+ 
+ 
+ /**** Routes ****/
+ 
+ Routes = CLASS {
+     CHILDREN {
+         Transfers ;
+     };
+     PROPERTIES {
+         expedited shipments.derived = SUM( Transfers.expedited shipments );
+         receipts.derived = SUM( Transfers.receipts );
+         shipments.derived = SUM( Transfers.shipments );
+         transport cost.derived = SUM( Transfers.transport cost );
+         transport lead time = 0;
+         transport lead time.unit = "days";
+         transport unit cost = 0;
+     };
+     attributes = From Location, To Location, Type;
+     color = "PMS 182";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 635; MgiYpos = 75; }";
+     icon = "Transport/ship";
+     sort code = 420;
+ }
+ 
+ 
+ 
+ /**** Transfers Out ****/
+ 
+ Transfers Out = CLASS {
+     CHILDREN {
+         Transfers ;
+     };
+     PROPERTIES {
+         nb shipments = SUM( Transfers.one );
+         nb shipments.unit = " ";
+         shipments = SUM( Transfers.shipments );
+     };
+     attributes = From Location, Product;
+     color = "PMS 243";
+     components = Products, Routes Out;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 455; MgiYpos = 215; }";
+     icon = "Transport/truck_red";
+     resource name = "Transfer Out";
+     sort code = 450;
+     unit = "Units";
+ }
+ 
+ 
+ 
+ /**** Transfers In ****/
+ 
+ Transfers In = CLASS {
+     CHILDREN {
+         Transfers ;
+     };
+     PROPERTIES {
+         nb receipts = SUM( Transfers.one );
+         nb receipts.unit = " ";
+         planned receipts = SUM( Transfers.planned receipts );
+         planned receipts sum = SUM( Products At Locations.planned receipts );
+         receipts = SUM( Transfers.receipts );
+         receipts allocation weight partial sum.derived = SUM( Transfers.receipts allocation weight );
+         receipts allocation weight partial sum.unit = " ";
+         receipts allocation weight sum.derived = SUM( Products At Locations.receipts allocation weight sum );
+         receipts allocation weight sum.unit = " ";
+         use fixed receipts allocation = SUM( Products At Locations.use fixed receipts allocation );
+         use fixed receipts allocation.unit = " ";
+     };
+     attributes = Product, To Location;
+     color = "PMS 243";
+     components = Products, Routes In;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 455; MgiYpos = 355; }";
+     icon = "Transport/truck_blue";
+     resource name = "Transfer In";
+     sort code = 460;
+     unit = "Units";
+ }
+ 
+ 
+ 
+ /**** Transfers ****/
+ 
+ Transfers = CLASS {
+     PROPERTIES {
+         allow expedited shipments = 0;
+         allow expedited shipments.unit = " ";
+         expedited shipments = UNDEFINED;
+         expedited shipments <= allow expedited shipments * planned shipments;
+         offset = MAX( INT( transport lead time * %day - 0.5 ), 0 );
+         one = %day / (%day);
+         one.unit = " ";
+         planned receipts = COLLECT( planned shipments minus expedited, offset, offset) + expedited shipments;
+         planned shipments = UNDEFINED;
+         planned shipments minus expedited = planned shipments - expedited shipments;
+         receipts = planned receipts + scheduled receipts;
+         receipts allocation diff.derived = receipts allocation factor * SUM( Transfers In.planned receipts sum ) - planned receipts;
+         receipts allocation diff >= IF( use fixed receipts allocation, 0, -1e+010);
+         receipts allocation diff <= IF( use fixed receipts allocation, 0, 1e+010);
+         receipts allocation factor.derived = receipts allocation weight / (SUM( Transfers In.receipts allocation weight sum ));
+         receipts allocation factor.unit = " ";
+         receipts allocation weight = 0;
+         receipts allocation weight.unit = " ";
+         scheduled receipts = UNDEFINED;
+         scheduled shipments = UNDEFINED;
+         shipments = planned shipments + scheduled shipments;
+         transport cost = shipments * transport unit cost / units per transport unit;
+         transport cost.unit = "euro";
+         transport lead time = SUM( Routes.transport lead time );
+         transport unit cost = SUM( Routes.transport unit cost );
+         units per transport unit = SUM( Products.units per transport unit );
+         use fixed receipts allocation = SUM( Transfers In.use fixed receipts allocation );
+         use fixed receipts allocation.unit = " ";
+     };
+     attributes = From Location, Product, To Location, Type;
+     color = "PMS 243";
+     components = Products, Routes;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 545; MgiYpos = 285; }";
+     icon = "Transport/ship";
+     resource name = "Transfer";
+     sort code = 470;
+     unit = "Units";
+ }
+ 
+ 
+ 
+ /**** Suppliers ****/
+ 
+ Suppliers = CLASS {
+     CHILDREN {
+         Supplier Allocations ;
+         Products At Suppliers ;
+     };
+     PROPERTIES {
+         delivery = SUM( Supplier Allocations.delivery );
+         purchase = SUM( Supplier Allocations.purchase );
+         purchase cost = SUM( Supplier Allocations.purchase cost );
+         scheduled delivery = SUM( Supplier Allocations.scheduled delivery );
+     };
+     color = "PMS 169";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 5; MgiYpos = 75; }";
+     icon = "People/users3";
+     sort code = 500;
+ }
+ 
+ 
+ 
+ /**** Supplier Allocations ****/
+ 
+ Supplier Allocations = CLASS {
+     PROPERTIES {
+         allow expedited purchase = 0;
+         allow expedited purchase.unit = " ";
+         allow over max purchase = 0;
+         allow over max purchase.unit = " ";
+         delivery = planned delivery + scheduled delivery;
+         delivery allocation diff.derived = delivery allocation factor * SUM( Products At Locations.planned delivery ) - planned delivery;
+         delivery allocation diff >= IF( use fixed delivery allocation, 0, -1e+010);
+         delivery allocation diff <= IF( use fixed delivery allocation, 0, 1e+010);
+         delivery allocation factor.derived = delivery allocation weight / (SUM( Products At Locations.delivery allocation weight sum ));
+         delivery allocation factor.unit = " ";
+         delivery allocation weight = 0;
+         delivery allocation weight.unit = " ";
+         expedited purchase = UNDEFINED;
+         expedited purchase <= allow expedited purchase * purchase;
+         max purchase qty = 0;
+         min purchase qty = 0;
+         min purchase qty.unit = "units/bucket";
+         offset = MAX( INT( purchase lead time * %day - 0.5 ), 0 );
+         offset.unit = " ";
+         one = %day / (%day);
+         one.unit = " ";
+         over max purchase = UNDEFINED;
+         over max purchase <= allow over max purchase * (1e+010);
+         planned delivery = COLLECT( purchase minus expedited, offset, offset) + expedited purchase;
+         purchase = UNDEFINED;
+         purchase <= purchase ub;
+         purchase cost = delivery * purchase unit cost;
+         purchase lead time = 0;
+         purchase lead time.unit = "days";
+         purchase minus expedited = purchase - expedited purchase;
+         purchase ub = IF( max purchase qty - (9.9999e+009), 1e+010, max purchase qty + over max purchase);
+         purchase unit cost = 0;
+         purchase unit cost.unit = "euro/unit";
+         scheduled delivery = UNDEFINED;
+         under min purchase = IF( purchase, MAX( min purchase qty - purchase, 0 ), 0);
+         use fixed delivery allocation = SUM( Products At Locations.use fixed delivery allocation );
+         use fixed delivery allocation.unit = " ";
+     };
+     attributes = Slocation;
+     color = "PMS 169";
+     components = Products At Locations, Suppliers;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 160; MgiXpos = 70; MgiYpos = 215; }";
+     icon = "Transport/minibus_blue";
+     sort code = 510;
+ }
+ 
+ 
+ 
+ /**** Products At Suppliers ****/
+ 
+ Products At Suppliers = CLASS {
+     CHILDREN {
+         Supplier Allocations ;
+     };
+     PROPERTIES {
+         allow over max purchase = 0;
+         allow over max purchase.unit = " ";
+         max purchase qty = 0;
+         max purchase qty.unit = "units/bucket";
+         over max purchase = UNDEFINED;
+         over max purchase <= allow over max purchase * (1e+010);
+         purchase = SUM( Supplier Allocations.purchase );
+         purchase <= purchase ub;
+         purchase ub = IF( max purchase qty - (9.9999e+009), 1e+010, max purchase qty + over max purchase);
+     };
+     attributes = Product, Supplier;
+     color = "PMS 169";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 160; MgiXpos = 160; MgiYpos = 145; }";
+     sort code = 520;
+ }
+ 
+ 
+ 
+ /**** Customers ****/
+ 
+ Customers = CLASS {
+     CHILDREN {
+         Customer Allocations ;
+     };
+     PROPERTIES {
+         empty = UNDEFINED;
+         external demand = SUM( Customer Allocations.external demand );
+         planned sales = SUM( Customer Allocations.planned sales );
+         revenue = SUM( Customer Allocations.revenue );
+         service level = IF( external demand, planned sales * 100 / external demand, empty);
+         service level >= 100;
+     };
+     color = "PMS 358";
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 110; MgiXpos = 725; MgiYpos = 285; }";
+     icon = "People/users3";
+     sort code = 600;
+ }
+ 
+ 
+ 
+ /**** Customer Allocations ****/
+ 
+ Customer Allocations = CLASS {
+     PROPERTIES {
+         allow lost sales = 0;
+         allow under min sales = 0;
+         ctp = MAX( planned sales - external demand, 0 );
+         days passed end = days passed start + 1 / (%day);
+         days passed start = IF( first bucket, 0, SHIFT( days passed end, 1 ));
+         demand time fence = 0;
+         empty = UNDEFINED;
+         external demand.derived = MAX( forecast * use forecast, orders );
+         external demand >= planned sales;
+         first bucket = 1 - SHIFT( one, 2 );
+         forecast = UNDEFINED;
+         lost sales = external demand - planned sales;
+         lost sales <= allow lost sales * (1e+010);
+         min sales = external demand * min service level / 100 - under min sales;
+         min sales <= planned sales;
+         min service level = 0;
+         min service level <= service level;
+         min service level.unit = "%";
+         one = %day / (%day);
+         one.unit = " ";
+         orders = UNDEFINED;
+         planned sales = UNDEFINED;
+         price = 0;
+         price.unit = "euro/unit";
+         revenue = planned sales * price;
+         service level = IF( external demand, planned sales * 100 / external demand, empty);
+         service level.unit = "%";
+         under min sales = UNDEFINED;
+         under min sales <= allow under min sales * (1e+010);
+         use forecast = MAX( 0, MIN( 1, (days passed end - demand time fence) * %day ) );
+     };
+     attributes = Slocation;
+     color = "PMS 358";
+     components = Products At Locations, Customers;
+     graphinfo = "{MgiHeight = 20; MgiState = 32; MgiWidth = 160; MgiXpos = 610; MgiYpos = 355; }";
+     icon = "People/dude2";
+     sort code = 610;
+ }
+ 
+ 
