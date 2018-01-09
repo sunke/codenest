@@ -3,7 +3,7 @@ grammar AplModel;
 /***********************************************************
  * AP Lite grammar rules
  **********************************************************/
-modelDef: (classDef)+ ;
+modelDef: (classDef)* ;
 
 classDef
  	: className '=' 'class' ';'
