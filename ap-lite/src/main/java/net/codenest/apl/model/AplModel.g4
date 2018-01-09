@@ -62,7 +62,7 @@ expression
  	| functionStatement
  	| dateTimeVariable
  	| propertyName
- 	| NUMBER
+ 	| number
 	;
 
 dateTimeVariable: '%' ('minute' | 'hour' | 'day' | 'week' | 'month' | 'year') ;
@@ -80,12 +80,12 @@ classPropertyRef: className '.' propertyName ;
 classUnitDef: 'unit' '=' literalString ';' ;
 
 classDescriptionDef: 'description' '=' literalString ';' ;
+                       
+classResourceNameDef: 'resource name' '=' literalString ';' ;
 
-classResourceNameDef: 'resource' 'name' '=' literalString ';' ;
+classGraphInfoDef: 'graphinfo' '=' literalString ';' ;
 
-classGraphInfoDef: 'graph' 'info' '=' literalString ';' ;
-
-classSortCodeDef: 'sort' 'code' '=' NUMBER ';' ;
+classSortCodeDef: 'sort code' '=' number ';' ;
 
 classIconDef: 'icon' '=' literalString ';' ;
 
@@ -134,6 +134,8 @@ intFunction: 'int' '(' expression ')' ;
 
 invcoverFunction: 'invcover' '(' expression ',' expression ')' ;
 
+number: (DIGIT+ '.' DIGIT* EXP?) | (DIGIT* '.' DIGIT+ EXP?) | (DIGIT+ EXP) | DIGIT+ | ('-' number) ;
+
  
  /***********************************************************
  * AP Lite lexer rules
@@ -147,8 +149,6 @@ IDENTIFIER: [a-zA-Z] ([ a-zA-Z0-9_]? [a-zA-Z0-9_])*;
 DAY_NAME: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun' ;
  
 LITERALSTRING: '"' .*? '"' ;
-
-NUMBER: ((DIGIT+ '.' DIGIT* EXP?) | (DIGIT* '.' DIGIT+ EXP?) | (DIGIT+ EXP) | (DIGIT+)) | '-' NUMBER ;
 
 LINE_COMMENT: '//' .*? [\r\n] -> skip;
 
