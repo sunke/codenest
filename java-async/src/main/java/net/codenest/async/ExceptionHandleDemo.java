@@ -2,24 +2,19 @@ package net.codenest.async;
 
 import java.util.concurrent.CompletableFuture;
 
-public class CFExceptionHandleDemo {
+public class ExceptionHandleDemo {
 
 	public static void main(String[] args) throws Exception {
-		withoutExceptionHandling();
+		withExceptionally();
 	}
 
-	/**
-	 * This demo shows that an exception is silently ignored if there is no
-	 * exception handling attached to the CF.
-	 */
-	public static void withoutExceptionHandling() {
-		CompletableFuture<Long> cf = new CompletableFuture();
+	public static void withWhenComplete() {
+		CompletableFuture<Long> cf = new CompletableFuture<Long>();
 
 		CompletableFuture.runAsync(() -> {
-			System.out.println("Begin execution.");
 			throw new RuntimeException("A RuntimeException occuurs!");
 		}).whenComplete((r, e) -> {
-			System.out.println("End execution");
+			System.out.println(e.getMessage());
 			cf.complete(7L);
 		});
 
@@ -30,7 +25,16 @@ public class CFExceptionHandleDemo {
 		CompletableFuture.runAsync(() -> {
 			throw new RuntimeException("A RuntimeException occuurs!");
 		}).exceptionally(ex -> {
-			System.out.println("Error: " + ex.getMessage());
+			System.out.println(ex.getMessage());
+			return null;
+		});
+	}
+
+	public static void withHandle() {
+		CompletableFuture.runAsync(() -> {
+			throw new RuntimeException("A RuntimeException occuurs!");
+		}).handle((r, e) -> {
+			System.out.println(e.getMessage());
 			return null;
 		});
 	}
