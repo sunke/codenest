@@ -16,7 +16,7 @@ public class APWorkflowSolutionDemo {
 
 	public static void runWorkflow() {
 		System.out.println("runWorkflow: thread name = " + Thread.currentThread().getName());
-		interpreterExecute().join();
+		interpreterExecute();
 	}
 
 	public static CompletableFuture<Void> interpreterExecute() {

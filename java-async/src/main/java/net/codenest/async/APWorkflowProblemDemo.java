@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import static net.codenest.async.AsyncUtil.*;
 
 public class APWorkflowProblemDemo {
-	private static ExecutorService executor = Executors.newFixedThreadPool(1); // Executors.newFixedThreadPool(2);
+	private static ExecutorService executor = Executors.newFixedThreadPool(2); // Executors.newFixedThreadPool(2);
 
 	public static void main(String[] args) throws Exception {
 		runWorkflow();
