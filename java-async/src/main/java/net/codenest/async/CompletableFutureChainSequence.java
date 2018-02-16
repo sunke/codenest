@@ -8,6 +8,14 @@ public class CompletableFutureChainSequence {
 	public static void main(String[] args) throws Exception {
 		CompletableFuture<Void> result = CompletableFuture.completedFuture(null);
 		System.out.println("main: thread name = " + Thread.currentThread().getName());
+
+//		result = result.thenCompose(c -> {
+//			return getCF1();
+//		});
+//		
+//		result = result.thenCompose(c -> {
+//			return getCF2();
+//		});
 		
 		result.thenCompose(c -> {
 			return getCF1();
@@ -16,6 +24,12 @@ public class CompletableFutureChainSequence {
 		result.thenCompose(c -> {
 			return getCF2();
 		});
+		
+//		result.thenCompose(c -> {
+//			return getCF1();
+//		}).thenCompose(c -> {
+//			return getCF2();
+//		});
 		
 		result.join();
 		AsyncUtil.sleepInSeconds(5);

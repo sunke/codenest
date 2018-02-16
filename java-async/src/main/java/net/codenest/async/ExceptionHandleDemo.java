@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 public class ExceptionHandleDemo {
 
 	public static void main(String[] args) throws Exception {
-		withExceptionally();
+		withWhenComplete();
 	}
 
 	public static void withWhenComplete() {
@@ -14,9 +14,11 @@ public class ExceptionHandleDemo {
 		CompletableFuture.runAsync(() -> {
 			throw new RuntimeException("A RuntimeException occuurs!");
 		}).whenComplete((r, e) -> {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 			cf.complete(7L);
 		});
+		
+		cf.join();
 
 		System.out.println("cf = " + cf.join());
 	}
