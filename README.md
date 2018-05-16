@@ -1,1 +1,1 @@
-my own projects
+Store my own projects
