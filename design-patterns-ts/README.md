@@ -1,7 +1,10 @@
 # Implement Design Patterns with TypeScript #
 
+Here are implementations of several design patterns with TypeScript. 
+A simple demo is given for each design pattern.
+
 ### Creational Patterns ###
-* Factory
+* Factory 
 * Builder
 * Singleton
 
@@ -21,7 +24,7 @@ $ tsc
 ```
 
 ## Execute the code
-Execute the demo code for Adapter pattern.
+Example: execute the demo code for Adapter pattern.
 ```
 $ cd design-patterns-ts
 $ node .\build\adapter.js
