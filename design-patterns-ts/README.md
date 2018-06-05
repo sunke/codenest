@@ -4,9 +4,9 @@ Here are implementations of several design patterns with TypeScript.
 A simple demo is given for each pattern.
 
 ### Creational Patterns ###
-* Factory (https://github.com/sunke/codenest/blob/master/design-patterns-ts/factory.ts)
-* Builder (https://github.com/sunke/codenest/blob/master/design-patterns-ts/builder.ts)
-* Singleton
+* [Factory] (https://github.com/sunke/codenest/blob/master/design-patterns-ts/factory.ts)
+* [Builder] (https://github.com/sunke/codenest/blob/master/design-patterns-ts/builder.ts)
+* [Singleton]
 
 ### Structural Patterns ###
 * Adapter (https://github.com/sunke/codenest/blob/master/design-patterns-ts/adapter.ts)
