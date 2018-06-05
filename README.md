@@ -1,1 +1,1 @@
-Store my own projects
+# The place I explore software design. #

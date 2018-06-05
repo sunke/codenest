@@ -4,17 +4,17 @@ Here are implementations of several design patterns with TypeScript.
 A simple demo is given for each pattern.
 
 ### Creational Patterns ###
-* [Factory](https://github.com/sunke/codenest/blob/master/design-patterns-ts/factory.ts)
-* [Builder](https://github.com/sunke/codenest/blob/master/design-patterns-ts/builder.ts)
-* [Singleton](https://github.com/sunke/codenest/blob/master/design-patterns-ts/singleton.ts)
+* [Factory](https://github.com/sunke/codenest/tree/master/design-patterns-ts/factory.ts)
+* [Builder](https://github.com/sunke/codenest/tree/master/design-patterns-ts/builder.ts)
+* [Singleton](https://github.com/sunke/codenest/tree/master/design-patterns-ts/singleton.ts)
 
 ### Structural Patterns ###
-* [Adapter](https://github.com/sunke/codenest/blob/master/design-patterns-ts/adapter.ts)
-* [Decorator](https://github.com/sunke/codenest/blob/master/design-patterns-ts/decorator.ts)
+* [Adapter](https://github.com/sunke/codenest/tree/master/design-patterns-ts/adapter.ts)
+* [Decorator](https://github.com/sunke/codenest/tree/master/design-patterns-ts/decorator.ts)
 
 ### Behavioral Patterns ###
-* [Command](https://github.com/sunke/codenest/blob/master/design-patterns-ts/command.ts)
-* [Observer](https://github.com/sunke/codenest/blob/master/design-patterns-ts/observer.ts)
+* [Command](https://github.com/sunke/codenest/tree/master/design-patterns-ts/command.ts)
+* [Observer](https://github.com/sunke/codenest/tree/master/design-patterns-ts/observer.ts)
 
 ## Compile the code
 ```
