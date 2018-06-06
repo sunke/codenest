@@ -17,6 +17,7 @@ A simple demo is given for each pattern.
 ### Behavioral Patterns ###
 * [Command](https://github.com/sunke/codenest/tree/master/design-patterns-ts/command.ts)
 * [Observer](https://github.com/sunke/codenest/tree/master/design-patterns-ts/observer.ts)
+* [Iterator](https://github.com/sunke/codenest/tree/master/design-patterns-ts/iterator.ts)
 
 ## Compile the code
 ```
