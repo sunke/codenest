@@ -3,7 +3,7 @@ import { PatternDemo } from "./pattern";
 let name = "Facade Design Pattern";
 
 let description = `
-Wraps complicated or deprecated classes with an unified interface.
+Wraps complicated or deprecated classes with an unified interface to the clients.
 `;
 
 //----------------------------------------------------------------------------------

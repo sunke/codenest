@@ -3,74 +3,43 @@ import { PatternDemo } from "./pattern";
 let name = "Factory Design Pattern";
 
 let description = `
-Abstracts the creation of a family of objects into a common interface.
+Create an object without exposing its creation logic to the client 
+and refer to the newly created object using a common interface.
 `;
 
 //----------------------------------------------------------------------------------
 
-interface Button {
+interface Shape {
+    draw(): void;
 }
 
-interface Label {
-}
-
-interface Factory {
-    createButton(): Button;
-    createLabel(): Label;
-}
-
-class WindowsFactory implements Factory {
-    private static WindowsButton = class implements Button {
-        constructor() {
-            console.log("Windows Button"); 
-        }
-    }
-
-    private static WindowsLabel = class implements Label {
-        constructor() {
-            console.log("Windows Label"); 
-        }
-    }
-
-    createButton(): Button {
-        return new WindowsFactory.WindowsButton();
-    }
-
-    createLabel(): Label {
-        return new WindowsFactory.WindowsLabel();
+class Circle implements Shape {
+    draw(): void {
+        console.log("Draw circle");
     }
 }
 
-class UbuntuFactory implements Factory {
-    private static UbuntuButton = class implements Button {
-        constructor() {
-            console.log("Ubuntu Button"); 
+class Square implements Shape {
+    draw(): void {
+        console.log("Draw square");
+    }
+}
+
+class ShapeFactory {
+    static createShape(name: string): Shape {
+        switch(name) {
+            case "circle": return new Circle(); // this creation logic can be complexity
+            case "square": return new Square();
         }
-    }
-
-    private static UbuntuLabel = class implements Label {
-        constructor() {
-            console.log("Ubuntu Label"); 
-        }
-    }
-
-    createButton(): Button {
-        return new UbuntuFactory.UbuntuButton();
-    }
-
-    createLabel(): Label {
-        return new UbuntuFactory.UbuntuLabel();
     }
 }
 
 //----------------------------------------------------------------------------------
 
 PatternDemo.show(name, description, () => {
-    let winFactory = new WindowsFactory();
-    let ubuFactory = new UbuntuFactory();
+    let circle = ShapeFactory.createShape("circle");
+    let square = ShapeFactory.createShape("square");
 
-    winFactory.createButton();
-    winFactory.createLabel();
-    ubuFactory.createButton();
-    ubuFactory.createLabel();
+    circle.draw();
+    square.draw();
 });

@@ -3,14 +3,14 @@ import { PatternDemo } from "./pattern";
 let name = "Adapter Design Pattern";
 
 let description = `
-Converts the incompatible interface of a class (Adaptee) into another interface (Target) 
+Converts the incompatible interface of a class (Adaptee) into the interface 
 clients require.
 `;
 
 //----------------------------------------------------------------------------------
 
-interface Target {
-    targetCall(): void;
+interface Expect {
+    expectCall(): void;
 }
 
 class Adaptee {
@@ -19,8 +19,8 @@ class Adaptee {
     }
 }
 
-class Adaptor implements Target {
-    targetCall(): void {
+class Adaptor implements Expect {
+    expectCall(): void {
         console.log("Adaptor.targetCall() executes.")
         new Adaptee().incompatibleCall();
     }
@@ -30,5 +30,5 @@ class Adaptor implements Target {
 
 PatternDemo.show(name, description, () => {
     let adaptor = new Adaptor();
-    adaptor.targetCall();
+    adaptor.expectCall();
 });

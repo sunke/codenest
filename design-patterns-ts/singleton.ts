@@ -3,7 +3,8 @@ import { PatternDemo } from "./pattern";
 let name = "Singleton Design Pattern";
 
 let description = `
-Ensure a class has only one instance.
+Ensure a class has only one instance. This implementation is not thread safe 
+in multi-threaded Java but fine in single-threaded JavaScript. 
 `;
 
 //----------------------------------------------------------------------------------

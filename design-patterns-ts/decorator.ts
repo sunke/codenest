@@ -3,7 +3,7 @@ import { PatternDemo } from "./pattern";
 let name = "Decorator Design Pattern";
 
 let description = `
-Adds additional functionalites to an object.
+Adds additional functionalites on the orginal class.
 `;
 
 //----------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ interface Shape {
 
 class Circle implements Shape {
     draw(): void {
-        console.log("draw a circle")
+        console.log("Draw a circle")
     }
 }
 
@@ -27,6 +27,7 @@ class CircleDecorator implements Shape {
     }
 
     draw(): void {
+        this.setColor("black");
         this.circle.draw();
     }
 }
@@ -34,10 +35,6 @@ class CircleDecorator implements Shape {
 //----------------------------------------------------------------------------------
 
 PatternDemo.show(name, description, () => {
-    let circle = new Circle();
-    circle.draw();
-
-    let decorator = new CircleDecorator(circle);
-    decorator.setColor("red");
+    let decorator = new CircleDecorator(new Circle());
     decorator.draw();
 });
