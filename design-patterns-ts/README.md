@@ -12,6 +12,7 @@ A simple demo is given for each pattern.
 * [Adapter](https://github.com/sunke/codenest/tree/master/design-patterns-ts/adapter.ts)
 * [Decorator](https://github.com/sunke/codenest/tree/master/design-patterns-ts/decorator.ts)
 * [Facade](https://github.com/sunke/codenest/tree/master/design-patterns-ts/facade.ts)
+* [Flyweight](https://github.com/sunke/codenest/tree/master/design-patterns-ts/flyweight.ts)
 
 ### Behavioral Patterns ###
 * [Command](https://github.com/sunke/codenest/tree/master/design-patterns-ts/command.ts)
