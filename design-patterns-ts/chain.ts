@@ -10,13 +10,13 @@ to handle requests.
 //----------------------------------------------------------------------------------
 
 abstract class Handler {
-    handler: Handler;
+    nextHandler: Handler;
 
     abstract process(message: string);
 
     chain(handler: Handler): Handler {
-        this.handler = handler
-        return this.handler;
+        this.nextHandler = handler
+        return this.nextHandler;
     };
 }
 
@@ -24,8 +24,8 @@ class HandlerTextRequest extends Handler {
     process(message: string) {
         if (message == "text") {
             console.log("Process text ...");
-        } else if (this.handler != null) {
-            this.handler.process(message);
+        } else if (this.nextHandler != null) {
+            this.nextHandler.process(message);
         }
     }
 }
@@ -34,8 +34,8 @@ class HandlerImageRequest extends Handler {
     process(message: string) {
         if (message == "image") {
             console.log("Process image ...");
-        } else if (this.handler != null) {
-            this.handler.process(message);
+        } else if (this.nextHandler != null) {
+            this.nextHandler.process(message);
         }
     }
 }
@@ -44,8 +44,8 @@ class HandlerVideoRequest extends Handler {
     process(message: string) {
         if (message == "video") {
             console.log("Process video ...");
-        } else if (this.handler != null) {
-            this.handler.process(message);
+        } else if (this.nextHandler != null) {
+            this.nextHandler.process(message);
         }
     }
 }
