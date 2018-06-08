@@ -3,6 +3,10 @@ import { PatternDemo } from "./pattern";
 let name = "Visitor Design Pattern";
 
 let description = `
+Represent an operation to be performed on elements of an object structure.
+Visitor lets you define a new option without changing the classes of the
+elements on which it operates. Visitor pattern is commonly used in parser
+implementations.
 `;
 
 //----------------------------------------------------------------------------------
