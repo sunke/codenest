@@ -65,7 +65,7 @@ class TreeVisitor implements Visitor {
             node.childLeft.accept(this);
         }
         if (node.childRight != null) {
-            node.childLeft.accept(this);
+            node.childRight.accept(this);
         }
     }
 
@@ -75,7 +75,7 @@ class TreeVisitor implements Visitor {
             node.childLeft.accept(this);
         }
         if (node.childRight != null) {
-            node.childLeft.accept(this);
+            node.childRight.accept(this);
         }
     }
 
@@ -85,7 +85,7 @@ class TreeVisitor implements Visitor {
             node.childLeft.accept(this);
         }
         if (node.childRight != null) {
-            node.childLeft.accept(this);
+            node.childRight.accept(this);
         }
     }
 }
