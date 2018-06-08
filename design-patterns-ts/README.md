@@ -19,6 +19,7 @@ A simple demo is given for each pattern.
 * [Observer](https://github.com/sunke/codenest/tree/master/design-patterns-ts/observer.ts)
 * [Iterator](https://github.com/sunke/codenest/tree/master/design-patterns-ts/iterator.ts)
 * [Chain of Responsibility](https://github.com/sunke/codenest/tree/master/design-patterns-ts/chain.ts)
+* [Visitor](https://github.com/sunke/codenest/tree/master/design-patterns-ts/visitor.ts)
 
 ## Compile the code
 ```
