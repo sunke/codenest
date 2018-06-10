@@ -21,6 +21,7 @@ A simple demo is given for each pattern.
 * [Chain of Responsibility](https://github.com/sunke/codenest/tree/master/design-patterns-ts/src/chain.ts)
 * [Visitor](https://github.com/sunke/codenest/tree/master/design-patterns-ts/src/visitor.ts)
 * [State](https://github.com/sunke/codenest/tree/master/design-patterns-ts/src/state.ts)
+* [Memento](https://github.com/sunke/codenest/tree/master/design-patterns-ts/src/memento.ts)
 
 ## Compile the code
 ```
