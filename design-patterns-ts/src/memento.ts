@@ -19,11 +19,11 @@ class Editor {
 
     constructor() {
         console.log("Initial State:", this.state)
-    };
+    }
 
     doAction(name: string) {
         this.stack.push([name, new Memento(this.state)]);
-        this.state = Math.floor(Math.random() * 100);
+        this.state = Math.floor(Math.random() * 100); // simulate state update
         console.log("State after doAction", name, ":", this.state);
     }
 
