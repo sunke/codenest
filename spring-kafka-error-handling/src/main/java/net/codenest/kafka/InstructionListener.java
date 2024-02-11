@@ -1,6 +1,7 @@
 package net.codenest.kafka;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
@@ -30,5 +31,10 @@ public class InstructionListener {
             log.error("Exception: " + e.getMessage());
             throw e;
         }
+    }
+
+    @DltHandler
+    public void dltProcess(String instruction) {
+        log.info("Process the dlt instruction {}", instruction);
     }
 }

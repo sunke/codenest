@@ -1,18 +1,7 @@
 version: '3.6'
 
-volumes:
-  zookeeper-data:
-    driver: local
-  zookeeper-log:
-    driver: local
-  kafka-data:
-    driver: local
-
 services:
-
   akhq:
-    # build:
-    #   context: .
     image: tchiotludo/akhq
     restart: unless-stopped
     environment:
