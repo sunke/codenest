@@ -9,20 +9,22 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
 public class InstructionListener {
 
-    @RetryableTopic(kafkaTemplate = "kafkaTemplate",
-            attempts = "4",
-            autoCreateTopics = "false",
-            retryTopicSuffix = ".retry",
-            topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE,
-            dltTopicSuffix = ".dlt",
-            backoff = @Backoff(delay = 3000, multiplier = 1.5, maxDelay = 15000)
-    )
-    @KafkaListener(topics = "instruction", groupId = "stl")
+      @Transactional(transactionManager = "kafkaTransactionManager", rollbackFor = Throwable.class)
+//    @RetryableTopic(kafkaTemplate = "kafkaTemplate",
+//            attempts = "4",
+//            autoCreateTopics = "false",
+//            retryTopicSuffix = ".retry",
+//            topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE,
+//            dltTopicSuffix = ".dlt",
+//            backoff = @Backoff(delay = 3000, multiplier = 1.5, maxDelay = 15000)
+//    )
+    @KafkaListener(topics = "instruction", groupId = "stl", concurrency = "3")
     public void listen(@Header(KafkaHeaders.RECEIVED_TOPIC) String receivedTopic, String instruction) {
         log.info("Topic({}) handler receive data = {}", receivedTopic, instruction);
         try {
@@ -33,8 +35,8 @@ public class InstructionListener {
         }
     }
 
-    @DltHandler
-    public void dltProcess(String instruction) {
-        log.info("Process the dlt instruction {}", instruction);
-    }
+//    @DltHandler
+//    public void dltProcess(String instruction) {
+//        log.info("Process the dlt instruction {}", instruction);
+//    }
 }
