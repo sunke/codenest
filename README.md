@@ -1,7 +1,1 @@
-Here stores the following projects. 
-
-## design-patterns-ts ## 
-Implements some design patterns with TypeScript.
-
-## kotlin-vs-java ## 
-Compares Kotlin with Java.
+I explore software development in this place. It stores the following projects: 
